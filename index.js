@@ -18,12 +18,20 @@ async function run() {
         await client.connect();
         const database = client.db("travelTour");
         const offering = database.collection("offerings");
+        const service = database.collection("services");
+        
         // GET Api 
         app.get('/offerings', async (req, res) => {
             const cursor = offering.find({});
-            const offerings = await cursor.toArray();
+            const offerings = await cursor.limit(6).toArray();
             res.json(offerings);
-        })
+        });
+
+        app.get('/services', async(req, res) =>{
+            const curson = service.find({});
+            const services = await curson.toArray();
+            res.json(services);
+        });
     }
     finally {
         // await client.close();
