@@ -57,7 +57,7 @@ async function run() {
         });
 
         app.post('/findOffer', async (req, res) => {
-            const email = req.body.email;
+            const email = req.body;
             const query = { email: string(email) };
             const cursor = addOffer.find(query);
             const result = await cursor.toArray();
