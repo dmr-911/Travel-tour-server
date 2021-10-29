@@ -46,7 +46,7 @@ async function run() {
         app.get('/addOffer', async (req, res) => {
             const query = req.query.search;
             const cursor = addOffer.find({});
-            const addedOffers = await result.toArray();
+            const addedOffers = await cursor.toArray();
             const result = addedOffers.filter(user => user.email.toLowerCase().includes(query));
             res.json(result);
         });
