@@ -43,17 +43,17 @@ async function run() {
             const destinations = await cursor.toArray();
             res.json(destinations);
         });
+
         app.get('/addOffer', async (req, res) => {
-            const query = req.query.search;
+            const search = req.query.search;
             const cursor = addOffer.find({});
             const addedOffers = await cursor.toArray();
-            const result = addedOffers.filter(user => user.email.toLowerCase().includes(query));
-            res.json(result);
-        });
-        app.get('/addOffer/:email', async (req, res) => {
-            const result = addOffer.find({email: req.params.email});
-            const addedOffers = await result.toArray();
-            res.send(addedOffers);
+            if (search) {
+                const result = addedOffers.filter(user => user.email.toLowerCase().includes(search));
+                res.json(result);
+            } else {
+                res.json(addedOffers);
+            }
         });
 
         // POST Api
@@ -61,12 +61,6 @@ async function run() {
             const offer = req.body;
             const result = await addOffer.insertOne(offer);
 
-            res.json(result);
-        });
-        app.post('/addOffer/:email', async (req, res) => {
-            const cursor = addOffer.find({ email: req.params.email });
-            // const addedOffers = await cursor.toArray();
-            const result = await user.insertMany(cursor)
             res.json(result);
         });
 
