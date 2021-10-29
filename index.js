@@ -63,8 +63,8 @@ async function run() {
         });
         app.post('/addOffer/:email', async (req, res) => {
             const cursor = addOffer.find({ email: req.params.email });
-            const addedOffers = await cursor.toArray();
-            const result = await user.insertMany(addedOffers)
+            // const addedOffers = await cursor.toArray();
+            const result = await user.insertMany(cursor)
             res.json(result);
         });
 
