@@ -4,6 +4,7 @@ const cors = require('cors');
 const { MongoClient } = require("mongodb");
 const port = process.env.PORT || 5000;
 require("dotenv").config();
+const ObjectId = require("mongodb").ObjectId;
 
 // Middleware
 app.use(cors());
@@ -51,6 +52,14 @@ async function run() {
             const offer = req.body;
             const result = await addOffer.insertOne(offer);
 
+            res.json(result);
+        });
+
+        // DELETE Api
+        app.delete('/addOffer/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await addOffer.deleteOne(query);
             res.json(result);
         })
     }
