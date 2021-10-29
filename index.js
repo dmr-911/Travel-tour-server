@@ -44,14 +44,16 @@ async function run() {
             res.json(destinations);
         });
         app.get('/addOffer', async (req, res) => {
+            const query = req.query.search;
             const cursor = addOffer.find({});
-            const addedOffers = await cursor.toArray();
-            res.json(addedOffers);
+            const addedOffers = await result.toArray();
+            const result = addedOffers.filter(user => user.email.toLowerCase().includes(query));
+            res.json(result);
         });
         app.get('/addOffer/:email', async (req, res) => {
-            const cursor = addOffer.find({email: req.params.email});
-            const addedOffers = await cursor.toArray();
-            res.json(addedOffers);
+            const result = addOffer.find({email: req.params.email});
+            const addedOffers = await result.toArray();
+            res.send(addedOffers);
         });
 
         // POST Api
