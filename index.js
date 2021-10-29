@@ -24,7 +24,7 @@ async function run() {
         const destination = database.collection("destinations");
         const addOffer = database.collection("addedOffers");
         const user = database.collection("users");
-
+        const about = database.collection("about");
         // GET Api 
         app.get('/offerings', async (req, res) => {
             const cursor = offering.find({});
@@ -54,6 +54,12 @@ async function run() {
             } else {
                 res.json(addedOffers);
             }
+        });
+
+        app.get('/about', async (req, res) => {
+            const cursor = about.find({});
+            const result = await cursor.toArray();
+            res.json(result);
         });
 
         // POST Api
