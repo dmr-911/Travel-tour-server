@@ -20,6 +20,7 @@ async function run() {
         const offering = database.collection("offerings");
         const service = database.collection("services");
         const destination = database.collection("destinations");
+        const addOffer = database.collection("addedOffers");
 
         // GET Api 
         app.get('/offerings', async (req, res) => {
@@ -38,6 +39,19 @@ async function run() {
             const cursor = destination.find({});
             const destinations = await cursor.toArray();
             res.json(destinations);
+        });
+        app.get('/addOffer', async (req, res) => {
+            const cursor = addOffer.find({});
+            const addedOffers = await cursor.toArray();
+            res.json(addedOffers);
+        });
+
+        // POST Api
+        app.post('/addOffer', async (req, res) => {
+            const offer = req.body;
+            const result = await addOffer.insertOne(offer);
+
+            res.json(result);
         })
     }
     finally {
