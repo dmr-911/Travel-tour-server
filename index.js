@@ -78,6 +78,23 @@ async function run() {
             res.json(result);
         });
 
+        // PUT Api
+        app.put('/addOffer/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id) };
+            const updatedStatus = req.body;
+            console.log('updating user ', req.params.id);
+            console.log(req.body);
+            const options = { upsert: true };
+                const updateDoc = {
+                  $set: {
+                        info: updatedStatus
+                  }
+            };
+            const result = await addOffer.updateOne(filter, updateDoc, options);
+            res.json(result);
+        });
+
         // DELETE Api
         app.delete('/addOffer/:id', async (req, res) => {
             const id = req.params.id;
