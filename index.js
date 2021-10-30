@@ -62,6 +62,16 @@ async function run() {
             res.json(result);
         });
 
+        app.get('/subscriber', async (req, res) => {
+           const search = req.query.search;
+           const cursor = subscriber.find({});
+           const subscribers = await cursor.toArray();
+             const result = subscribers.find((user) =>
+               user.email.toLowerCase().includes(search)
+             );
+             res.json(result);
+        })
+
         // POST Api
         app.post('/addOffer', async (req, res) => {
             const offer = req.body;
