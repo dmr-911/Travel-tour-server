@@ -28,7 +28,7 @@ async function run() {
         // GET Api 
         app.get('/offerings', async (req, res) => {
             const cursor = offering.find({});
-            const offerings = await cursor.limit(6).toArray();
+            const offerings = await cursor.toArray();
             res.json(offerings);
         });
 
@@ -66,6 +66,14 @@ async function run() {
         app.post('/addOffer', async (req, res) => {
             const offer = req.body;
             const result = await addOffer.insertOne(offer);
+
+            res.json(result);
+        });
+        
+        app.post('/offerings', async (req, res) => {
+            const offer = req.body;
+            console.log(offer);
+            const result = await offering.insertOne(offer);
 
             res.json(result);
         });
