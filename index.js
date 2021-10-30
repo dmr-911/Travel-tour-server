@@ -23,8 +23,8 @@ async function run() {
         const service = database.collection("services");
         const destination = database.collection("destinations");
         const addOffer = database.collection("addedOffers");
-        const user = database.collection("users");
         const about = database.collection("about");
+        const subscriber = database.collection("subscribers");
         // GET Api 
         app.get('/offerings', async (req, res) => {
             const cursor = offering.find({});
@@ -72,11 +72,17 @@ async function run() {
         
         app.post('/offerings', async (req, res) => {
             const offer = req.body;
-            console.log(offer);
             const result = await offering.insertOne(offer);
 
             res.json(result);
         });
+
+        app.post('/subscriber', async (req, res) => {
+            const email = req.body;
+            const result = await subscriber.insertOne(email);
+
+            res.json(result);
+        })
 
         // PUT Api
         app.put('/addOffer/:id', async (req, res) => {
