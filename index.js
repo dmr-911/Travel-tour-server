@@ -117,6 +117,13 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const result = await addOffer.deleteOne(query);
             res.json(result);
+        });
+
+        app.delete('/offerings/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await offering.deleteOne(query);
+            res.json(result);
         })
     }
     finally {
